@@ -15,10 +15,20 @@ import java.util.Map;
  **/
 @Data
 public class BaseRequest implements Serializable {
+
     private String              businessCode;
+
     private String              productCode;
+
+    private String              appNo;
+
+    private String              idNo;
+
+    private String              mobileNo;
+
     //使用基本类型还是包装类
     private boolean             isSync;
+
     //使用object可行
     private Map<String, Object> extInfo = new HashMap<>();
 }
