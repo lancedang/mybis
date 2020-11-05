@@ -6,6 +6,7 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.support.converter.MessageConversionException;
 import org.springframework.amqp.support.converter.SimpleMessageConverter;
+import org.springframework.stereotype.Component;
 
 /**
  * @author qiankai07
