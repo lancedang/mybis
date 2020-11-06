@@ -16,17 +16,17 @@
 
     <bean id="messageConverter" class="com.lance.mt.mqservicesdk.MqMessageConverter"></bean>
 
-    <rabbit:template id="amqpTemplate" connection-factory="mqConnectionFactory" reply-timeout="${mq.timeout:20000}"
-                     message-converter="messageConverter" reply-queue="amqpTemplateReplyQueue"
-                     reply-address="replyEx/routeReply"
-                     correlation-key="correlationIdString">
-        <rabbit:reply-listener concurrency="2"/>
-    </rabbit:template>
-
     <rabbit:connection-factory id="mqConnectionFactory" channel-cache-size="10" executor="mqConnectionTaskExecutor"
                                addresses="${spring.rabbitmq.addresses}" virtual-host="${spring.rabbitmq.virtual-host}"
                                username="${spring.rabbitmq.username}" password="${spring.rabbitmq.password}"/>
 
     <rabbit:admin connection-factory="mqConnectionFactory"/>
+
+
+    <bean id="amqpTemplate" class="org.springframework.amqp.rabbit.core.RabbitTemplate">
+        <constructor-arg ref="mqConnectionFactory"/>
+        <property name="messageConverter" ref="messageConverter"/>
+        <property name="replyTimeout" value="20000"/>
+    </bean>
 
 </beans>
