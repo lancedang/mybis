@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
  * Created on 11/4/20 4:25 PM
  * InvocationHandler 用于利用target类执行实际逻辑
  **/
-public class RpcServiceClientInvocationHandler implements InvocationHandler {
+public class RpcServiceProxyInvocationHandler implements InvocationHandler {
 
     //实际被代理的对象，这里注意，不一定是同$Proxy0同接口的类，可以是任何一个类，只要不在invoke方法中执行method.invoke(amqpTemplate, args)就行
     private AmqpTemplate amqpTemplate;

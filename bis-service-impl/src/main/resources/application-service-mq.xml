@@ -3,12 +3,18 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
 
-    <import resource="classpath:/application-config-service.xml"></import>
+    <import resource="classpath*:/application-sdk-mq.xml"></import>
+
 
     <rabbit:queue-arguments id="ampqQueueArguments"/>
     <rabbit:queue queue-arguments="ampqQueueArguments" id="pbocServiceQueue" name="${pboc.queue.name}"/>
 
-    <rabbit:listener-container>
+    <bean id="pbocService" class="com.lance.mt.mqservicesdk.rpc.RcpServiceExporter">
+        <property name="service" ref="pbocServiceImpl"></property>
+        <property name="serviceInterface" value="com.lance.mt.bisservicefacade.pboc.PbocService"></property>
+    </bean>
+
+    <rabbit:listener-container connection-factory="mqConnectionFactory">
         <rabbit:listener ref="pbocService" queues="pbocServiceQueue"></rabbit:listener>
     </rabbit:listener-container>
 

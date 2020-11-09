@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyConsumer{
 
-    @RabbitListener(queues = "someQueue", containerFactory="myFactory")
+    @RabbitListener(queues = "someQueue")
     public void processMessage(String content) {
         // ...
     }

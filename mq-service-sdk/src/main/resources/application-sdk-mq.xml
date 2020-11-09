@@ -4,9 +4,6 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
 
 
-    <rabbit:queue-arguments id="ampqQueueArguments"/>
-    <rabbit:queue queue-arguments="ampqQueueArguments" id="amqpTemplateReplyQueue"/>
-
     <bean id="mqConnectionTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
         <property name="threadNamePrefix" value="mq-"/>
         <property name="queueCapacity" value="100"/>

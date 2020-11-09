@@ -17,6 +17,7 @@
 
 	<modules>
 		<module>bis-service-impl</module>
+		<module>rabbitmq-demo</module>
 	</modules>
 
 

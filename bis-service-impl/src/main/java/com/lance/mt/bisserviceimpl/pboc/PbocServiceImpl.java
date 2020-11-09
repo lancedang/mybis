@@ -5,6 +5,7 @@ package com.lance.mt.bisserviceimpl.pboc;
 import com.lance.mt.bisservicefacade.pboc.PbocRequest;
 import com.lance.mt.bisservicefacade.pboc.PbocResponse;
 import com.lance.mt.bisservicefacade.pboc.PbocService;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +15,7 @@ import java.util.Map;
  * @version 1.0
  * Created on 11/3/20 9:17 PM
  **/
+@Component
 public class PbocServiceImpl implements PbocService {
     @Override
     public PbocResponse queryPbocByIdNo(PbocRequest pbocRequest) {

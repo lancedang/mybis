@@ -3,27 +3,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
 
-
-    <rabbit:queue-arguments id="ampqQueueArguments" />
-    <rabbit:queue queue-arguments="ampqQueueArguments" id="amqpTemplateReplyQueue" />
-
-    <bean id="mqConnectionTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-        <property name="threadNamePrefix" value="mq-" />
-        <property name="queueCapacity" value="100" />
-        <property name="maxPoolSize" value="20" />
-        <property name="corePoolSize" value="20" />
+    <bean id="pbocService" class="com.lance.mt.mqservicesdk.rpc.RpcServiceProxy">
+        <property name="queueName" value="${pboc.queue.name}"></property>
+        <property name="serviceClass" value="com.lance.mt.bisservicefacade.pboc.PbocService"></property>
     </bean>
-
-    <bean id="messageConverter" class="com.lance.mt.mqservicesdk.MqMessageConverter"></bean>
-
-    <rabbit:template id="amqpTemplate" connection-factory="mqConnectionFactory" reply-timeout="${mq.timeout:20000}"
-                     message-converter="messageConverter" reply-queue="amqpTemplateReplyQueue">
-        <rabbit:reply-listener concurrency="2"/>
-    </rabbit:template>
-
-    <rabbit:connection-factory id="mqConnectionFactory" channel-cache-size="10" executor="mqConnectionTaskExecutor"
-                               addresses="${spring.rabbitmq.address}" virtual-host="${spring.rabbitmq.virtual-host}" username="${spring.rabbitmq.username}" password="${spring.rabbitmq.password}" />
-
-    <rabbit:admin connection-factory="mqConnectionFactory" />
 
 </beans>

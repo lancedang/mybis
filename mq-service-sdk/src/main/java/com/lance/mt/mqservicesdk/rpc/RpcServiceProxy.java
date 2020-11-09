@@ -6,7 +6,6 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.Proxy;
@@ -17,7 +16,7 @@ import java.lang.reflect.Proxy;
  * Created on 11/4/20 5:18 PM
  * 返回接口类
  **/
-public class RpcServiceProxyClientFactoryBean<T> implements FactoryBean, InitializingBean {
+public class RpcServiceProxy<T> implements FactoryBean, InitializingBean {
 
     private Class                             serviceClass;
 
@@ -26,18 +25,18 @@ public class RpcServiceProxyClientFactoryBean<T> implements FactoryBean, Initial
     @Autowired
     private AmqpTemplate                      amqpTemplate;
 
-    private RpcServiceClientInvocationHandler rpcServiceClientInvocationHandler = new RpcServiceClientInvocationHandler();
+    private RpcServiceProxyInvocationHandler rpcServiceProxyInvocationHandler = new RpcServiceProxyInvocationHandler();
 
     @PostConstruct
     public void init() {
-        rpcServiceClientInvocationHandler.setAmqpTemplate(amqpTemplate);
-        rpcServiceClientInvocationHandler.setQueueName(queueName);
+        rpcServiceProxyInvocationHandler.setAmqpTemplate(amqpTemplate);
+        rpcServiceProxyInvocationHandler.setQueueName(queueName);
     }
 
     @Override
     public T getObject() {
         return (T) Proxy.newProxyInstance(serviceClass.getClassLoader(),
-            new Class[] { serviceClass }, rpcServiceClientInvocationHandler);
+            new Class[] { serviceClass }, rpcServiceProxyInvocationHandler);
     }
 
     @Override
